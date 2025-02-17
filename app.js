@@ -90,6 +90,8 @@ async function addEstateMarker(location) {
 }
 
 
+
+
 async function nearbySearch(type) {
     clearMarkers();
 
@@ -97,11 +99,19 @@ async function nearbySearch(type) {
         const { Place, SearchNearbyRankPreference } = await google.maps.importLibrary('places');
         const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
 
+        let radius
+
+        if (type == 'preschool') {
+            radius = 6000
+        } else {
+            radius = 3000
+        }
+
         const request = {
             fields: ['displayName', 'location', 'photos', 'id'],
             locationRestriction: {
                 center: estateLocation,
-                radius: 3000,
+                radius: radius,
             },
             includedPrimaryTypes: type,
             maxResultCount: 7,
@@ -112,12 +122,20 @@ async function nearbySearch(type) {
 
         const { places } = await Place.searchNearby(request);
 
-        if (places.length) {
+        let validPlaces;
+
+        if (type == 'preschool') {
+            validPlaces = places.filter(place => !place.displayName.toLowerCase().includes('schule'));
+        } else {
+            validPlaces = places;
+        }
+
+        if (validPlaces.length) {
 
             const { LatLngBounds } = await google.maps.importLibrary('core');
             const bounds = new LatLngBounds();
 
-            places.forEach((place) => {
+            validPlaces.forEach((place) => {
                 const placeMarker = new AdvancedMarkerElement({
                     map,
                     position: place.location,
@@ -170,7 +188,6 @@ async function nearbySearch(type) {
 
                         img.src = place.photos[0].getURI({ maxWidth: 200 });
 
-                        // The Api doesn't throw an error in the console when the image quotas are exhausted, it just makes the request with getting the image URL but blocks it beeing loaded 
                         img.onerror = function () {
                             displayQuotaOverlay();
                         };
