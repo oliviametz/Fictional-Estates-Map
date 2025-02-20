@@ -27,6 +27,8 @@ footer a {
 
 .underline-gold {
     position: relative;
+    max-width: max-content;
+    margin: 0 auto;
 }
 
 .underline-gold::after {
@@ -75,6 +77,23 @@ footer a {
 }
 
 
+/* Archive Styles */
+
+.archive-card p {
+    font-size: 13.5px;
+}
+
+.zoom {
+    transition: transform 0.5s ease;
+}
+
+.archive-card:hover .zoom {
+    transform: scale(1.1);
+}
+
+
+
+
 /* Map Styles */
 
 #map-container {
@@ -83,6 +102,20 @@ footer a {
     width: 100%;
 }
 
+.quota-message-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: rgb(0, 0, 0);
+    padding: 90px;
+}
 
 #estate-marker .RIFvHW-maps-pin-view-background {
     fill: #c3aa57;
@@ -96,8 +129,9 @@ footer a {
 
 .gm-style-iw {
     max-height: max-content !important;
-    min-width: 210px !important;
+    min-width: 230px !important;
 }
+
 
 .gm-style-iw button {
     max-height: max-content !important;
@@ -119,6 +153,7 @@ footer a {
     display: flex;
     flex-direction: column;
 }
+
 
 .place-details p {
     font-size: 17px;
@@ -150,8 +185,8 @@ footer a {
 
 .attribution-label p {
     font-size: 10px;
-    margin: 0;
     padding: 0;
+    margin: 0;
 }
 
 .attribution-label a {
@@ -161,32 +196,15 @@ footer a {
     margin-left: 5px;
 }
 
-.quota-message-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    background-color: rgb(0, 0, 0);
-    padding: 90px;
-}
-
 @supports (-moz-appearance: none) {
     .gm-style-iw button {
         margin-right: -14px !important;
     }
+
 }
 
 
-
-/* Max-width Media Queries */
-
-
+/* Max-width media queries */
 
 @media (max-width: 360px) {
 
@@ -224,11 +242,27 @@ footer a {
     }
 
 
+
+}
+
+
+/* Max-height media queries */
+
+@media (max-height: 600px) {
+
+    .carousel-inner {
+        height: 75vh;
+    }
+
+    #map-container {
+        height: 75vh;
+    }
 }
 
 
 
-/* Min-width Media Queries */
+
+/* Min-width media queries */
 
 
 
